@@ -1,3 +1,9 @@
 This could be where pdf magic happens.
 
 use rerun unicorn config.ru to reload in development
+
+On localhost:
+window #1: redis-server /etc/redis.conf
+window #2: god -c ~/Sites/syllabuster/pdfer/config/god.rb -D
+
+Access sqlite via: sqlite3 ./db/development.sqlite3
