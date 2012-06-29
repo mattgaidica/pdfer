@@ -1,2 +1,2 @@
 *.rdb
-config/resque.god
+config/god.rb
