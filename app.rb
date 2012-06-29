@@ -8,8 +8,11 @@ require "sqlite3"
 root = ::File.dirname(__FILE__)
 require File.join(root, "/config/environments")
 
+host = production? ? "23.21.187.103" : "localhost"
+
 class Document < ActiveRecord::Base
-  attr_accessible :original,
+  attr_accessible :token,
+                  :original,
                   :pdf,
                   :text,
                   :complete
@@ -22,18 +25,33 @@ class Image < ActiveRecord::Base
   belongs_to :document
 end
 
+def json_status(code, reason)
+  status code
+  {:response => 
+    {
+      :status => code,
+      :reason => reason
+    }
+  }.to_json
+end
+
 get "/" do
   "Hey there, were  in the " + settings.environment + " environment. -PDFer"
+end
+
+get "/:token" do
+  document = Document.find_by_token(params[:token]).to_json
 end
 
 post "/" do
   content_type :json
   if params[:document]
-    Document.create({
+    document = Document.create({
       :original => params[:document],
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36))[1..16],
       :complete => false
-    }).to_json
+    })
+    {:token => document.token, :status => "http://#{host}/#{document.token}"}.to_json
   end
 end
 
