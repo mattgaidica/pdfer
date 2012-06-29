@@ -18,16 +18,27 @@ before do
   content_type :json
 end
 
+helpers do
+  def valid_document? document
+    unless (document =~ /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix).nil?
+      true
+    end
+  end
+end
+
 class Processor
+  attr_accessor :job_folder
   @queue = :document_id
-  
+
   def self.perform(document_id)
-    puts "Doc ID #{document_id}!"
+    document = Document.find(document_id)
+    create_job_folder(document.token)
+    document.download_original(@job_folder)
   end
 
   def self.create_job_folder token
-    directory = "#{settings.jobs_folder}/#{token}"
-    Dir::mkdir(directory) unless File.exists?(directory)
+    @job_folder = "#{settings.jobs_folder}/#{token}"
+    Dir::mkdir(@job_folder) unless File.exists?(@job_folder)
   end
 
   def self.sanitize_filename(filename)
@@ -55,16 +66,16 @@ class Document < ActiveRecord::Base
                   :complete
   has_many :images
 
-  def download_original
+  def download_original save_folder
     uri = URI(self.original)
     filename = Processor.sanitize_filename(self.original.split("/").last)
-    save_location = "#{settings.jobs_folder}/#{self.token}/#{filename}"
+    save_here = "#{save_folder}/#{filename}"
 
     if uri.scheme.eql? "https"
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open save_location, 'w' do |io|
+          open save_here, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
@@ -75,7 +86,7 @@ class Document < ActiveRecord::Base
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open save_location, 'w' do |io|
+          open save_here, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
@@ -99,7 +110,8 @@ class Document < ActiveRecord::Base
 end
 
 class Image < ActiveRecord::Base
-  attr_accessible :size,
+  attr_accessible :document_id,
+                  :size,
                   :image
   belongs_to :document
 end
@@ -115,7 +127,7 @@ get "/" do
   {:welcome => "Getting Sylly with PDFer.", :environment => settings.environment}.to_json
 end
 
-get "/get/:token" do
+get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if !document.complete
       document.format_results.to_json
@@ -128,16 +140,17 @@ get "/get/:token" do
 end
 
 post "/do" do
-  if params[:document]
+  if params[:document] && valid_document?(params[:document])
     document = Document.create({
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
       :original => params[:document],
       :complete => false
     })
     Resque.enqueue(Processor, document.id)
-    #Processor.create_job_folder(document.token)
-    #document.download_original
-    {:token => document.token, :status => "https://#{settings.host}/doc/#{document.token}"}.to_json
+    #Processor.perform(document.id)
+    {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
+  else
+    json_status 400, "Please provide a valid document."
   end
 end
 
