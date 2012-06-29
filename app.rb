@@ -8,7 +8,11 @@ require "sqlite3"
 root = ::File.dirname(__FILE__)
 require File.join(root, "/config/environments")
 
-host = production? ? "23.21.187.103" : "localhost"
+host = production? ? "23.21.187.103" : "localhost:8080"
+
+before do
+  content_type :json
+end
 
 class Document < ActiveRecord::Base
   attr_accessible :token,
@@ -17,6 +21,18 @@ class Document < ActiveRecord::Base
                   :text,
                   :complete
   has_many :images
+
+  def format_results
+    results = {
+      :original => self.original,
+      :pdf => self.pdf,
+      :text => self.text,
+      :images => {
+        :small => Image.where(:document_id => self.id, :size => "small").map{|m| m[:image][:image]},
+        :large => Image.where(:document_id => self.id, :size => "large").map{|m| m[:image][:image]}
+      }
+    }
+  end
 end
 
 class Image < ActiveRecord::Base
@@ -28,27 +44,31 @@ end
 def json_status(code, reason)
   status code
   {:response => 
-    {
-      :status => code,
-      :reason => reason
-    }
+    {:status => code, :reason => reason}
   }.to_json
 end
 
 get "/" do
-  "Hey there, were  in the " + settings.environment + " environment. -PDFer"
+  {:welcome => "Getting Sylly with PDFer.", :environment => settings.environment}.to_json
 end
 
 get "/:token" do
-  document = Document.find_by_token(params[:token]).to_json
+  if document = Document.find_by_token(params[:token])
+    if !document.complete
+      document.format_results.to_json
+    else
+      json_status 400, "Document still processing."
+    end
+  else
+    json_status 404, "Not found."
+  end
 end
 
 post "/" do
-  content_type :json
   if params[:document]
     document = Document.create({
       :original => params[:document],
-      :token => Digest::MD5.hexdigest(rand(36**8).to_s(36))[1..16],
+      :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
       :complete => false
     })
     {:token => document.token, :status => "http://#{host}/#{document.token}"}.to_json
@@ -56,11 +76,34 @@ post "/" do
 end
 
 get "/images" do
-  content_type :json
   Image.find(:all).to_json
 end
 
 get "/documents" do
-  content_type :json
   Document.find(:all).to_json
+end
+
+# catch-alls
+get "*" do
+  status 404
+end
+
+post "*" do
+  status 404
+end
+
+put "*" do
+  status 404
+end
+
+delete "*" do
+  status 404
+end
+
+not_found do
+  json_status 404, "Not found"
+end
+
+error do
+  json_status 500, env['sinatra.error'].message
 end
