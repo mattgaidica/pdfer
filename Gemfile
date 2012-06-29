@@ -6,8 +6,8 @@ gem "activerecord", "~> 3.2.6"
 gem "sinatra-activerecord", "~> 1.1.0"
 gem "json"
 gem "httparty"
-gem "koala"
 gem "rspec"
+gem "sqlite3"
 
 group :development, :test do
   gem "rack-test"
