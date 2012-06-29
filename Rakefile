@@ -1,6 +1,13 @@
 require File.expand_path('../app', __FILE__)
 require 'sinatra/activerecord/rake'
 
+namespace :jobs do
+  desc "Delete all jobs."
+  task :delete do
+    puts `rm -rf jobs/*`
+  end
+end
+
 namespace :server do
   desc "restart the production server"
   task :restart do

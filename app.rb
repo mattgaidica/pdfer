@@ -51,12 +51,13 @@ class Document < ActiveRecord::Base
   def download_original
     uri = URI(self.original)
     filename = Processor.sanitize_filename(self.original.split("/").last)
+    save_location = "#{settings.jobs_folder}/#{self.token}/#{filename}"
 
     if uri.scheme.eql? "https"
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open "#{settings.jobs_folder}/#{token}/#{filename}", 'w' do |io|
+          open save_location, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
@@ -67,7 +68,7 @@ class Document < ActiveRecord::Base
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open "#{settings.jobs_folder}/#{token}/#{filename}", 'w' do |io|
+          open save_location, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
@@ -104,14 +105,10 @@ def json_status(code, reason)
 end
 
 get "/" do
-  Processor.create_job_folder("xyz")
-  document = Document.new({:original => "https://s3.amazonaws.com/syllabi/81074d63d79121923b00.pdf"})
-  document.download_original
-
   {:welcome => "Getting Sylly with PDFer.", :environment => settings.environment}.to_json
 end
 
-get "/document/:token" do
+get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if !document.complete
       document.format_results.to_json
@@ -123,14 +120,14 @@ get "/document/:token" do
   end
 end
 
-post "/" do
+post "/doc" do
   if params[:document]
     document = Document.create({
       :original => params[:document],
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
       :complete => false
     })
-    {:token => document.token, :status => "https://#{settings.host}/document/#{document.token}"}.to_json
+    {:token => document.token, :status => "https://#{settings.host}/doc/#{document.token}"}.to_json
   end
 end
 
