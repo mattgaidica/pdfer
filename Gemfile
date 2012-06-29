@@ -7,6 +7,7 @@ gem "sinatra-activerecord", "~> 1.1.0"
 gem "json"
 gem "rspec"
 gem "sqlite3"
+gem "resque"
 
 group :development, :test do
   gem "rack-test"

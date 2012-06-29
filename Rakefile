@@ -1,5 +1,13 @@
-require File.expand_path('../app', __FILE__)
-require 'sinatra/activerecord/rake'
+require File.expand_path("../app", __FILE__)
+require "sinatra/activerecord/rake"
+require "resque/tasks"
+
+task "resque:setup" do
+  ENV['QUEUE'] = '*'
+end
+
+desc "Alias for resque:work (To run workers on Heroku)"
+task "jobs:work" => "resque:work"
 
 namespace :jobs do
   desc "Delete all jobs."
@@ -21,21 +29,21 @@ namespace :db do
     puts "Current version: #{ActiveRecord::Migrator.current_version}"
   end
 
-  desc 'Reset the database'
+  desc "Reset the database"
   task :reset do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Migration.verbose = true
     if File.exists?(File.join(File.dirname(__FILE__), "db/schema.rb"))
-      Rake::Task['db:schema:load'].invoke
+      Rake::Task["db:schema:load"].invoke
     end
-    #ActiveRecord::Migrator.down('db/migrate')
-    ActiveRecord::Migrator.migrate('db/migrate')
+    #ActiveRecord::Migrator.down("db/migrate")
+    ActiveRecord::Migrator.migrate("db/migrate")
   end
 
   namespace :schema do
-    desc 'Output the schema to db/schema.rb'
+    desc "Output the schema to db/schema.rb"
     task :dump do
-      File.open('db/schema.rb', 'w') do |f|
+      File.open("db/schema.rb", "w") do |f|
         ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, f)
       end
     end

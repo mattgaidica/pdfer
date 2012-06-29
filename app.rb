@@ -4,6 +4,7 @@ require "json"
 require "digest/md5"
 require "sqlite3"
 require "net/http"
+require "resque"
 
 root = ::File.dirname(__FILE__)
 require File.join(root, "/config/environments")
@@ -18,6 +19,12 @@ before do
 end
 
 class Processor
+  @queue = :document_id
+  
+  def self.perform(document_id)
+    puts "Doc ID #{document_id}!"
+  end
+
   def self.create_job_folder token
     directory = "#{settings.jobs_folder}/#{token}"
     Dir::mkdir(directory) unless File.exists?(directory)
@@ -108,7 +115,7 @@ get "/" do
   {:welcome => "Getting Sylly with PDFer.", :environment => settings.environment}.to_json
 end
 
-get "/doc/:token" do
+get "/get/:token" do
   if document = Document.find_by_token(params[:token])
     if !document.complete
       document.format_results.to_json
@@ -120,13 +127,16 @@ get "/doc/:token" do
   end
 end
 
-post "/doc" do
+post "/do" do
   if params[:document]
     document = Document.create({
-      :original => params[:document],
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
+      :original => params[:document],
       :complete => false
     })
+    Resque.enqueue(Processor, document.id)
+    #Processor.create_job_folder(document.token)
+    #document.download_original
     {:token => document.token, :status => "https://#{settings.host}/doc/#{document.token}"}.to_json
   end
 end
