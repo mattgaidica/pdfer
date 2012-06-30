@@ -12,3 +12,7 @@ gem "resque"
 group :development, :test do
   gem "rack-test"
 end
+
+group :production do
+  gem "docsplit"
+end
