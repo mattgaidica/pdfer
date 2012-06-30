@@ -6,7 +6,7 @@ resque is located on port 5678
 
 On localhost:
 window #1: redis-server /etc/redis.conf
-window #2: god -c ~/Sites/syllabuster/pdfer/config/god.rb -D
+window #2: rake jobs:work RACK_ENV=development
 
 Access sqlite via: sqlite3 ./db/development.sqlite3
 
