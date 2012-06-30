@@ -161,7 +161,7 @@ post "/do" do
     })
     #Resque.enqueue(Processor, document.id)
     Processor.perform(document.id)
-    {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
+   # {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
   else
     json_status 400, "Please provide a valid document."
   end
