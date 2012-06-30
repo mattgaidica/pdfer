@@ -32,12 +32,12 @@ class Processor
   @queue = :document_id
 
   def self.perform(document_id)
-    #begin
+    begin
       document = Document.find(document_id)
       document.create_tree
-    #rescue
+    rescue
       puts "there was an error in finding that document."
-    #end
+    end
   end
 
   def self.sanitize_filename(filename)
@@ -175,8 +175,8 @@ post "/do" do
       :source => params[:document],
       :complete => false
     })
-    Resque.enqueue(Processor, document.id)
-    #Processor.perform(document.id)
+    #Resque.enqueue(Processor, document.id)
+    Processor.perform(document.id)
     {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
   else
     json_status 400, "Please provide a valid document."
