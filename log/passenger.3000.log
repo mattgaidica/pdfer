@@ -1,0 +1,85 @@
+2012/06/29 23:25:31 [notice] 28091#0: using the "epoll" event method
+2012/06/29 23:25:31 [notice] 28091#0: nginx/1.2.1
+2012/06/29 23:25:31 [notice] 28091#0: built by gcc 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+2012/06/29 23:25:31 [notice] 28091#0: OS: Linux 3.2.0-24-virtual
+2012/06/29 23:25:31 [notice] 28091#0: getrlimit(RLIMIT_NOFILE): 1024:4096
+2012/06/29 23:25:31 [notice] 28132#0: start worker processes
+2012/06/29 23:25:31 [notice] 28132#0: start worker process 28133
+2012/06/29 23:25:31 [info] 28133#0: *1 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:25:31 [info] 28133#0: *2 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:25:33 [error] 28133#0: *4 "/var/www/pdfer/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+2012/06/29 23:26:31 [info] 28133#0: *3 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:27:31 [info] 28133#0: *5 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:28:31 [info] 28133#0: *6 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:29:31 [info] 28133#0: *7 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:30:32 [info] 28133#0: *8 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:31:32 [info] 28133#0: *9 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:32:32 [info] 28133#0: *10 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:33:32 [info] 28133#0: *11 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:34:32 [info] 28133#0: *12 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:35:32 [info] 28133#0: *13 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:36:32 [info] 28133#0: *14 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:37:32 [info] 28133#0: *15 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/29 23:38:24 [info] 28133#0: *16 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:38:24 [notice] 28132#0: signal 15 (SIGTERM) received, exiting
+2012/06/29 23:38:24 [notice] 28133#0: exiting
+2012/06/29 23:38:24 [notice] 28133#0: exit
+2012/06/29 23:38:24 [notice] 28132#0: signal 17 (SIGCHLD) received
+2012/06/29 23:38:24 [notice] 28132#0: worker process 28133 exited with code 0
+2012/06/29 23:38:24 [notice] 28132#0: exit
+2012/06/29 23:38:53 [notice] 28707#0: using the "epoll" event method
+2012/06/29 23:38:53 [notice] 28707#0: nginx/1.2.1
+2012/06/29 23:38:53 [notice] 28707#0: built by gcc 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+2012/06/29 23:38:53 [notice] 28707#0: OS: Linux 3.2.0-24-virtual
+2012/06/29 23:38:53 [notice] 28707#0: getrlimit(RLIMIT_NOFILE): 1024:4096
+2012/06/29 23:38:53 [notice] 28748#0: start worker processes
+2012/06/29 23:38:53 [notice] 28748#0: start worker process 28749
+2012/06/29 23:38:53 [info] 28749#0: *1 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:38:53 [info] 28749#0: *2 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:38:55 [error] 28749#0: *4 "/var/www/pdfer/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+2012/06/29 23:39:10 [info] 28749#0: *3 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/29 23:39:10 [notice] 28748#0: signal 15 (SIGTERM) received, exiting
+2012/06/29 23:39:10 [notice] 28749#0: exiting
+2012/06/29 23:39:10 [notice] 28749#0: exit
+2012/06/29 23:39:10 [notice] 28748#0: signal 17 (SIGCHLD) received
+2012/06/29 23:39:10 [notice] 28748#0: worker process 28749 exited with code 0
+2012/06/29 23:39:10 [notice] 28748#0: exit
+2012/06/30 00:00:23 [notice] 29598#0: using the "epoll" event method
+2012/06/30 00:00:23 [notice] 29598#0: nginx/1.2.1
+2012/06/30 00:00:23 [notice] 29598#0: built by gcc 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+2012/06/30 00:00:23 [notice] 29598#0: OS: Linux 3.2.0-24-virtual
+2012/06/30 00:00:23 [notice] 29598#0: getrlimit(RLIMIT_NOFILE): 1024:4096
+2012/06/30 00:00:23 [notice] 29639#0: start worker processes
+2012/06/30 00:00:23 [notice] 29639#0: start worker process 29640
+2012/06/30 00:00:23 [info] 29640#0: *1 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/30 00:00:23 [info] 29640#0: *2 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/30 00:01:23 [info] 29640#0: *3 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:02:23 [info] 29640#0: *6 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:03:23 [info] 29640#0: *7 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:04:23 [info] 29640#0: *8 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:05:23 [info] 29640#0: *9 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:06:23 [info] 29640#0: *10 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:07:23 [info] 29640#0: *11 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:08:23 [info] 29640#0: *12 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:09:23 [info] 29640#0: *13 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:10:23 [info] 29640#0: *14 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:11:23 [info] 29640#0: *15 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:12:23 [info] 29640#0: *16 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:13:24 [info] 29640#0: *17 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:14:24 [info] 29640#0: *18 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:15:24 [info] 29640#0: *19 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:16:24 [info] 29640#0: *20 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:17:24 [info] 29640#0: *21 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:18:24 [info] 29640#0: *22 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:19:24 [info] 29640#0: *23 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:20:24 [info] 29640#0: *24 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:21:24 [info] 29640#0: *25 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:22:24 [info] 29640#0: *26 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:23:24 [info] 29640#0: *27 client timed out (110: Connection timed out) while reading client request line, client: 127.0.0.1, server: 0.0.0.0:3000
+2012/06/30 00:23:30 [info] 29640#0: *28 client prematurely closed connection while reading client request line, client: 127.0.0.1, server: _
+2012/06/30 00:23:30 [notice] 29639#0: signal 15 (SIGTERM) received, exiting
+2012/06/30 00:23:30 [notice] 29640#0: exiting
+2012/06/30 00:23:30 [notice] 29640#0: exit
+2012/06/30 00:23:30 [notice] 29639#0: signal 17 (SIGCHLD) received
+2012/06/30 00:23:30 [notice] 29639#0: worker process 29640 exited with code 0
+2012/06/30 00:23:30 [notice] 29639#0: exit
