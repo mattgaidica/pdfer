@@ -11,7 +11,7 @@ require File.join(root, "/config/environments")
 
 configure do
   set :jobs_folder, "./jobs"
-  set :host, production? ? "23.21.187.103" : "localhost:8080"
+  set :host, production? ? "108.166.73.138" : "localhost:8080"
 end
 
 before do
