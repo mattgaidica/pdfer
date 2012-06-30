@@ -7,3 +7,20 @@ window #1: redis-server /etc/redis.conf
 window #2: god -c ~/Sites/syllabuster/pdfer/config/god.rb -D
 
 Access sqlite via: sqlite3 ./db/development.sqlite3
+
+rackspace root: 6aEl7J7lCsyllabuster-compute
+
+<VirtualHost *:80>
+  ServerName 108.166.72.138
+  DocumentRoot /var/www/pdfer/public 
+  <Directory /var/www/pdfer/public >
+     # This relaxes Apache security settings.
+     AllowOverride all
+     # MultiViews must be turned off.
+     Options -MultiViews
+  </Directory>
+</VirtualHost>
+
+PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\e[01;32m\]\w \$(parse_git_branch): \[\e[00m\]"
+
+(reload with: exec bash)

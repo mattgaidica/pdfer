@@ -17,9 +17,15 @@ namespace :jobs do
 end
 
 namespace :server do
-  desc "restart the production server"
-  task :restart do
-    puts `sudo /etc/init.d/apache2 restart`
+  namespace :restart do
+    desc "restart phusion passenger on linux"
+    task :passenger do
+      puts `touch /var/www/pdfer/tmp/restart.txt`
+    end
+    desc "restart the production server"
+    task :apache do
+      puts `sudo /etc/init.d/apache2 restart`
+    end
   end
 end
 
