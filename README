@@ -24,3 +24,5 @@ rackspace root: 6aEl7J7lCsyllabuster-compute
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\e[01;32m\]\w \$(parse_git_branch): \[\e[00m\]"
 
 (reload with: exec bash)
+
+ruby config/daemons.rb start
