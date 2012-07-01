@@ -105,7 +105,7 @@ class Document < ActiveRecord::Base
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
-    Docsplit.extract_text(Dir[job_file_path], :ocr => true, :output => 'text')
+    Docsplit.extract_text(Dir[job_file_path], :ocr => true, :output => '#{job_path}/text')
     open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
       f << File.open("#{job_path}/text/#{self.token}-temp.txt").read.gsub(/(?<!\n)\n(?!\n)/, ' ')
     }
