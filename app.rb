@@ -105,7 +105,7 @@ class Document < ActiveRecord::Base
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
-    Docsplit.extract_text(Dir[job_file_path], :ocr => true, :output => "#{job_path}/text")
+    Docsplit.extract_text(job_file_path, :ocr => true, :output => "#{job_path}/text")
     system "touch #{job_path}/text/#{self.token}-processed.txt"
     open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
       f << File.open("#{job_path}/text/#{self.token}-processed.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
@@ -120,7 +120,7 @@ class Document < ActiveRecord::Base
   end
 
   def download
-    uri = URI(URI.escape(self.source))
+    uri = URI(self.source)
 
     if uri.scheme.eql? "https"
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
