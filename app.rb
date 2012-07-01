@@ -99,9 +99,9 @@ class Document < ActiveRecord::Base
 
     puts "making images..."
     system "mkdir #{job_path}/images"
-    Docsplit.extract_images(pdf_file_path, :size => '400x', :format => [:png])
+    Docsplit.extract_images(job_file_path, :size => '400x', :format => [:png])
     system "mkdir #{job_path}/images/small && mv #{job_path}/*.png #{job_path}/images/small"
-    Docsplit.extract_images(pdf_file_path, :size => '1200x', :format => [:png])
+    Docsplit.extract_images(job_file_path, :size => '1200x', :format => [:png])
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
