@@ -106,12 +106,11 @@ class Document < ActiveRecord::Base
 
     puts "extracting text..."
     Docsplit.extract_text(job_file_path, :output => "#{job_path}/text")
-=begin
     system "touch #{job_path}/text/#{self.token}-processed.txt"
-    open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
-      f << File.open("#{job_path}/text/#{self.token}-processed.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
+    open("#{job_path}/text/#{self.token}-processed.txt", 'w') { |f|
+      f << File.open("#{job_path}/text/#{self.token}.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
     }
-=end
+
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
 
     puts "moving pdf into folder..."
