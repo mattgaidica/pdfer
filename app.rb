@@ -12,7 +12,7 @@ require File.join(root, "/config/environments")
 
 configure do
   set :jobs_path, "#{root}/jobs"
-  set :host, production? ? "108.166.73.138" : "localhost:8080"
+  set :host, production? ? "108.166.72.138" : "localhost:8080"
 end
 
 before do
@@ -168,7 +168,7 @@ end
 
 get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
-    if !document.complete
+    if document.complete
       document.to_json
     else
       json_status 204, "Document still processing."
