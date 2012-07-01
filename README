@@ -8,6 +8,9 @@ On localhost:
 window #1: redis-server /etc/redis.conf
 window #2: rake jobs:work RACK_ENV=development
 
+On server:
+sudo /etc/init.d/redis-server start
+
 Access sqlite via: sqlite3 ./db/development.sqlite3
 
 rackspace root: 6aEl7J7lCsyllabuster-compute
@@ -29,3 +32,5 @@ PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\e[01;
 ruby config/daemons.rb start
 
 delete jobs without removing git ignore: rm -rf [!.]*
+
+restart workers: sudo kill -9  `ps aux | grep [r]esque | grep -v grep | cut -c 10-16`
