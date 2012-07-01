@@ -1,4 +1,4 @@
 require "rubygems"
 require "daemons"
 
-Daemons.run("resque-task.rb")
+Daemons.run("./config/resque-task.rb")
