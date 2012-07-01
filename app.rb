@@ -169,7 +169,7 @@ end
 get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if !document.complete
-      document.format_results.to_json
+      document.to_json
     else
       json_status 204, "Document still processing."
     end
