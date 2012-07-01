@@ -106,8 +106,9 @@ class Document < ActiveRecord::Base
 
     puts "extracting text..."
     Docsplit.extract_text(Dir[job_file_path], :ocr => true, :output => "#{job_path}/text")
+    system "touch #{job_path}/text/#{self.token}-processed.txt"
     open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
-      f << File.open("#{job_path}/text/#{self.token}.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
+      f << File.open("#{job_path}/text/#{self.token}-processed.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
     }
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
 
@@ -183,6 +184,7 @@ get "/doc/:token" do
 end
 
 post "/do" do
+  #do more validation on document, does it even exist?
   if params[:document] && valid_document?(params[:document])
     document = Document.create({
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
