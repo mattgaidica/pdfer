@@ -105,13 +105,15 @@ class Document < ActiveRecord::Base
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
-    Docsplit.extract_text(job_file_path, :output => "#{job_path}/text")
+    Docsplit.extract_text(job_file_path, :ocr => true, :output => "#{job_path}/text")
+
+=begin not reliable at the moment
     system "touch #{job_path}/text/#{self.token}-processed.txt"
     open("#{job_path}/text/#{self.token}-processed.txt", 'w') { |f|
       f << File.open("#{job_path}/text/#{self.token}.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
     }
-
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
+=end
 
     puts "moving pdf into folder..."
     system "mkdir #{job_path}/pdf && mv #{job_file_path} #{job_path}/pdf/#{self.token}.pdf"
@@ -192,9 +194,9 @@ post "/do" do
       :source => params[:document],
       :complete => false
     })
-    #Resque.enqueue(Processor, document.id)
-    Processor.perform(document.id)
-   # {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
+    Resque.enqueue(Processor, document.id)
+    #Processor.perform(document.id)
+    {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
   else
     json_status 400, "Please provide a valid document."
   end
