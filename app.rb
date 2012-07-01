@@ -7,6 +7,7 @@ require "net/http"
 require "resque"
 require "docsplit"
 require "aws/s3"
+require "fileutils"
 
 AWS::S3::Base.establish_connection!(
   :access_key_id     => "AKIAJM6UM7QJIER6VHZA",
@@ -82,43 +83,36 @@ class Storage < ActiveRecord::Base
 
   def self.bucket local
     remote = "#{md5}.#{ext(local)}"
-    AWS::S3::S3Object.store(remote, open(local), settings.s3_bucket)
+    AWS::S3::S3Object.store(remote, open(local), settings.s3_bucket, :access => :public_read)
     if AWS::S3::Service.response.success?
       self.create({:local => local, :remote => remote})
     end
   end
 
   def self.store_document document
-    puts document.job_file_path
+    puts document.pdf_file_path
     #should probably make sure these all exist before doing anything
-    if File.exist? document.job_file_path
-      #source file
-      bucket(document.source_file_path)
-      puts "source: #{document.source_file_path}"
+    #source file
+    bucket(document.source_file_path)
 
-      #job file
-      bucket(document.source_file_path)
-      puts "original: #{document.job_file_path}"
+    #pdf file
+    bucket(document.pdf_file_path)
 
-      #images
-      Dir["#{document.job_path}/images/large/*"].each do |file|
-        puts "large image: #{file}"
-        bucket(file)
-      end
-      Dir["#{document.job_path}/images/small/*"].each do |file|
-        bucket(file)
-        puts "small image: #{file}"
-      end
-
-      #text file
-      bucket(document.text_file_path)
-      puts "text: #{document.text_file_path}"
+    #images
+    document.small_images_file_paths.each do |file|
+      bucket(file)
     end
+    document.large_images_file_paths.each do |file|
+      bucket(file)
+    end
+
+    #text file
+    bucket(document.text_file_path) unless !production?
   end
 end
 
 class Document < ActiveRecord::Base
-  attr_accessor :job_file_path #base document from source
+  attr_accessor :pdf_file_path #base document from source
   attr_accessible :token,
                   :source,
                   :complete
@@ -139,41 +133,70 @@ class Document < ActiveRecord::Base
     "#{job_path}/#{Processor.sanitize_filename(self.source.split("/").last)}"
   end
 
-  def job_file_path
-    "#{job_path}/pdf/#{self.token}.pdf"
+  def pdf_file_path
+    "#{pdf_path}/#{self.token}.pdf"
   end
 
   def text_file_path
-    "#{job_path}/text/#{self.token}.txt"
+    "#{text_path}/#{self.token}.txt"
+  end
+
+  def pdf_path
+    "#{job_path}/pdf"
+  end
+
+  def text_path
+    "#{job_path}/text"
+  end
+
+  def images_path
+    "#{job_path}/images"
+  end
+
+  def small_images_path
+    "#{job_path}/images/small"
+  end
+
+  def small_images_file_paths
+    Dir["#{small_images_path}/*"]
+  end
+
+  def large_images_path
+    "#{job_path}/images/large"
+  end
+
+  def large_images_file_paths
+    Dir["#{large_images_path}/*"]
   end
 
   def create_tree
     puts "creating folder..."
-
-    system "mkdir #{job_path}"
+    Dir::mkdir(job_path) #unless File.exists?(job_path)
 
     puts "downloading source..."
     self.download
 
-    puts "doing production stuff..."
+    Dir::mkdir(pdf_path)
 
     if pdf?
-      system "cp #{source_file_path} #{job_file_path}"
+      FileUtils.cp(source_file_path, pdf_file_path)
     else
       puts "converting to pdf..."
       Docsplit.extract_pdf(source_file_path, output: job_path)
-      system "mkdir #{job_path}/pdf && mv #{source_file_path[0..source_file_path.rindex('.')] + 'pdf'} #{job_file_path}"
+      FileUtils.mv(source_file_path[0..source_file_path.rindex(".")] + "pdf", pdf_file_path)
     end
 
     puts "making images..."
-    system "mkdir #{job_path}/images"
-    Docsplit.extract_images(job_file_path, :output => job_path, :size => '400x', :format => [:png])
-    system "mkdir #{job_path}/images/small && mv #{job_path}/*.png #{job_path}/images/small"
-    Docsplit.extract_images(job_file_path, :output => job_path, :size => '1200x', :format => [:png])
-    system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
+    Dir::mkdir("#{images_path}")
+
+    Dir::mkdir(small_images_path)
+    Docsplit.extract_images(pdf_file_path, :output => small_images_path, :size => '400x', :format => [:png]) #unless !production?
+
+    Dir::mkdir(large_images_path)
+    Docsplit.extract_images(pdf_file_path, :output => large_images_path, :size => '1200x', :format => [:png]) #unless !production?
 
     puts "extracting text..."
-    Docsplit.extract_text(job_file_path, :ocr => false, :output => "#{job_path}/text")
+    Docsplit.extract_text(pdf_file_path, :ocr => false, :output => "#{text_path}") #unless !production?
 
 =begin not reliable at the moment
     system "touch #{job_path}/text/#{self.token}-processed.txt"
@@ -182,6 +205,8 @@ class Document < ActiveRecord::Base
     }
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
 =end
+
+    self.store
 
     self.complete = true
     self.save
