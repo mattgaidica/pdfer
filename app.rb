@@ -183,7 +183,7 @@ post "/do" do
   if params[:document] && valid_document?(params[:document])
     document = Document.create({
       :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
-      :source => params[:document],
+      :source => URI.encode(params[:document]),
       :complete => false
     })
     Resque.enqueue(Processor, document.id)
