@@ -1,0 +1,626 @@
+1
+OPIM 174 - Business Statistics
+Spring 2010
+Instructor:
+Office:
+Phone:
+Email:
+
+Jackie Hoell
+410 Hariri Building
+202-687-2653
+hoellj@msb.edu
+
+Office hours: Tuesday:
+2:30-6pm
+Wednesday:
+10:30-1pm
+Thursday:
+1:10-2:40pm
+Or by appointment
+
+Classes:
+
+8:00 - 9:40 Hariri 240
+9:50 -11:30 Hariri 240
+11:40 -12:55 Hariri 240
+
+COURSE OBJECTIVE
+This course introduces the basic concepts of Statistics and their application in managerial decisionmaking. In the first part of the course, we consider the steps of data collection, preliminary data analysis
+(numerical and graphical), probability and uncertainty, statistical inference. In the second part of the
+course, we examine statistical model building for the purposes of understanding variability and making
+forecasts. A detailed development of multiple regression analysis is complemented by some study of time
+series analysis. The objective is to demonstrate the effectiveness of statistical modeling in guiding
+managerial decision-making. The statistical analysis of large data sets is an integral part of modern
+business practice. Accordingly, both spreadsheets and statistical software will be used throughout the
+course.
+REQUIRED BOOKS
+Basic Business Statistics, 11th edition, by Berenson, Levine, & Krehbiel. You may buy it in either
+hardback or loose leaf (called the student value edition-SVE). Bookstores only buy back hardback copies
+of the text.
+HANDOUT PACKET
+A packet of handouts is available at the Copy Center 259 Hariri Building. Open 9am-5pm. Make sure
+you buy the OPIM 174 packet not the OPIM 172 packet. Cost $25.81 by check or Go Card.
+SOFTWARE
+Microsoft Excel 5.0 or higher and Minitab version 15.0. Read the last paragraph on page 4 of the textbook
+for an explanation of why I prefer Minitab to Excel. Both software programs are available through the
+MSB network. You may download the full version of the Minitab software from the S: drive onto your PC.
+Below are instructions on how to download and install MiniTab. If you experience problems please
+contact MSBTC at 202-687-4721 or email MSB Help.
+Downloading MiniTab
+The program install software (MiniTab15_Install.exe) and license file (MiniTab.lic) can be downloaded
+from the MSB S: Drive (S:/MSBTC Software/MiniTab15). The S: Dive is accessible through NetStorage.
+https://storage.msb.edu/netstorage.
+Download the compressed install and license and files from the S: Drive. Be sure to note where you
+download the file.
+Run the MiniTab15_Install.exe file. The MiniTab program files will be uncompressed into a directory
+named C:/MSBCONFIG.
+Installing MiniTab 15
+Go to the C:/MSBCONFIG directory and run the setup.exe file. If you are using Vista, right click the
+setup.exe file and "Run as Administrator".
+
+2
+Launch MiniTab 15. When prompted to enter the License Manager or choose a file, select the second
+radio button “Specify the License File”.
+Browse to the MiniTab.lic file you have downloaded. Select Open.
+Click “OK” to launch MiniTab.
+Subsequent launches of MiniTab will not require browsing to the license file again until after the expiration
+date in the license file.
+You may find it helpful this semester to use Microsoft Equation or MathType. Both software packages
+allow you to “insert” statistical notation and equations into documents. Microsoft Equation typically comes
+with Word. To use MathType, you may download a free trial version of the software at:
+http://www.dessci.com/en/products/mathtype/trial.asp?src=linkBox
+The free trial is only good for 30 days, hence you may want to wait and use it for when you type up your
+case report.
+TECHNOLOGY
+This course will make heavy use of computers. You will need to use your own computer. The three
+programs you need to know are Minitab-a statistical program, Excel-a spreadsheet program and your
+choice of a word processing program. Tutorials for Excel are available through the MSB Technology
+website. At http://technology.msb.edu/training/alphabetical.htm  select “E” then Excel. You will find the list
+of Excel tutorials available. There is a short Minitab tutor available by selecting “M” then Minitab.
+Information on the Minitab software is in the Handout Packet. On the Minitab Website at
+http://www.minitab.com/support/docs/ you can download “Meet Minitab” for version 15, to learn many of
+the basics. There is no Apple version of Minitab.
+GRADING CRITERIA
+0% for Class Attendance
+11% for Homework and Case Analysis
+16% for Case Presentation (10% - written presentation, 6% - oral presentation)
+48% for 4 quizzes
+25% for Final Exam
+CLASS ATTENDANCE is mandatory. Roll will not be taken. If you choose not to attend any particular
+class, the professor is under no obligation to provide notes, homework assignments, or homework
+answers. Arrangements should be made with your fellow students. If you know ahead of time that you
+will not be able to attend a class, you can meet with the professor during office hours before your absence
+to obtain information about the class and homework. Students should notify professors in writing at the
+beginning of the semester of religious observances that conflict with scheduled classes. You may attend
+class at any of the times that I teach OPIM 174 (8:00 or 9:50), EXCEPT - Case Presentation day & Quiz
+day. You must attend class at the time you are registered for all case presentations and quizzes. No
+exceptions.
+HOMEWORK will be collected and graded. Grades of √+, √, √-, NC will be given. √+ means you did all of
+the assignment correctly. √ means you did all of the assignment with several mistakes. √- means you did
+all of the assignment with numerous mistakes. NC means “no credit”; given because a significant amount
+of the assignment was not done. If I cannot read your handwritten answer, it will be marked incorrect.
+Each problem assigned must be attempted to receive a √-. Working with other students on homework
+problems will be allowed. Direct copying is NOT allowed. (Translation of working together but not
+copying: You may ask another student what formula to use to solve a particular problem, you may ask
+what Minitab or Excel command to use to answer a particular problem, you may NOT check your
+substitution into a formula, you may NOT have someone else do the calculations for you, you may NOT
+copy any answer or part of an answer, you may NOT use or copy another student’s Minitab or Excel
+output.) Each student is required to prepare and submit their own homework answers. Each student’s
+
+3
+homework must contain their own printout(s) of the appropriate output. By printout I mean the entire
+output shown in the Minitab Session window or in the Excel results table (not just the one number needed
+to answer the question) provided by either Excel or Minitab.NO PRINTOUT of all the output = NO
+CREDIT. No xerox copies of computer printouts are allowed. You are on your honor to abide by the
+above rules, and thus sign a pledge on EACH homework assignment turned in. Homework will be
+time consuming. Each problem typically presents a different aspect of the statistical concept(s) taught.
+No late homework assignments will be counted. You may miss 3 homework assignments without it
+affecting your homework grade. Homework must be turned in by 11:30 p.m. the day it is due, unless it is
+a case homework assignment. Case homeworks are due at the BEGINNING OF CLASS and count as
+TWO homework assignments. You are responsible for checking the homework answers on the S: drive
+(Hoell → OPIM-174) for proper format, interpretations, and conclusions. Please note: not every homework
+problem or every part will be graded each time. You are responsible for the proper format,
+interpretations and conclusions for ALL types of problems. All homework answers will be placed on
+the S: drive after their due date.
+----
+
+Turn in homework to the box in the front of the classroom, regardless of the time you attend.
+Please pick up your homework before class starts. Homework not picked up the day it is
+returned can be picked up during office hours.
+Homework group numbers are assigned according to the first letter(s) of your last name and time
+of class.
+Time:
+8:00
+Group 1: A – F
+2: G – K
+3: L – Z
+4:
+5:
+
+--
+
+EVERY HOMEWORK turned in must be folded on its long axis to receive credit.
+Acceptable
+
+--
+
+--
+
+Time:
+9:50
+Group 6: A – Cl
+7. Cm – H
+8: I – Le
+9: Lf – Q
+10: R – Z
+
+Not acceptable
+
+Name, group number AND PLEDGE must be displayed on the OUTSIDE of every homework to
+receive credit. Pledge: “This homework & printouts represents my own work. I have not allowed
+my homework to be copied nor have I copied another’s homework.” WARNING – I am dead
+serious about this!
+Homework due the day a case is presented will only be accepted at the BEGINNING of the
+class you are registered for. No exceptions.
+
+Accessing Data Sets for homework problems from the Brenson, Levine, & Krehbiel text: IF you have
+bought a new copy of the text, the data sets are included on the CD that comes with the text. IF you have
+bought a used copy, the CD containing the data sets may or may not have been included. If you will need
+copies of the data sets go to the S: drive, select “Hoell”, select “OPIM 174”, then select “BLK data”.
+Choose the appropriate file name. Accessing data sets for cases, select “Carlson” or “Carlson13” instead
+of BLK data and then the appropriate file name on the S: drive.
+
+4
+Four CASES will be assigned this semester. Each student will turn in part of the analysis of the three
+cases they are not presenting, as “part” of a homework assignment. In addition, each student will have
+one case “presentation”. Students, working in a group of 4 will be required to prepare one case for
+presentation. You are allowed to form your own groups of 4 students. ALL students in the group must be
+registered for the same class. It is not recommended that a group contain less members due to the
+amount of work involved. You may submit less than 4 names, but then I will include additional students to
+bring the group size up to 4. By 11:30am Thursday, January 21st, you must turn in a sheet with the
+names of your group members PLUS TIME OF CLASS. Do NOT email me the names of your group
+members. If I do not hear from you by 11:30am January 21st, I will assign you to a group. Cases for
+presentation will be randomly assigned to the groups. You will be notified of your case assignment on
+Tuesday, January 26th.
+Students not assigned to present the case MUST turn in an individual (NOT group) case analysis
+homework at the BEGINNING of the class you are registered for. No exceptions. A case homework
+assignment will count the same as TWO regular homework assignments. The case homework must
+include all statistical calculations and printouts of the appropriate output requested or needed for the case
+analysis questions assigned, including explanations, interpretations, and conclusions of the results. If you
+do not turn in the case analysis homework at the proper time or if you do not complete a significant
+amount of the case analysis homework, you will receive no credit for TWO homework assignments.
+Name, group number AND PLEDGE must be displayed on the OUTSIDE of every case homework
+assignment. Pledge: “This homework & printouts represents my own work. I have not allowed my
+homework to be copied nor have I copied another’s homework.” You will be expected to participate in
+the discussion of the case. The students presenting would prefer classmates to ask them questions
+during the case discussion rather than the professor. Hint, hint.
+Each student must contact all other case group members between when the case questions are handed
+out AND at least 1 week BEFORE you present the case. Contact with all group members must be
+maintained during this time period and up until you & your group members present. Failure to maintain
+contact will result in a loss of 10 points in your written case score. At the beginning of class the day you
+present, your group must turn in paper copies of slides (B&W copies are fine) or overheads that will be
+used during the oral presentation as well as turning in your full report on the case. Instructions about the
+oral presentation and written report can be found on the Case Presentation handout in the packet. Group
+members who are presenting do NOT need to turn in the case homework assignment BUT if other
+homework is due that day it must be turned in to receive credit. ALL members of the group (males AND
+females) are required to wear formal business attire, not business casual. The group will present ONLY
+their conclusion, recommendation or decision. The group will be allowed to present a maximum of 6
+slides/overheads in 10 minutes or less. Bring a copy of your presentation on disk, CD or data stick.
+Access to the S: drive or to your email account can sometimes be disrupted if the server is down. The
+show must go on. During the question & answer portion of your case presentation, a DIFFERENT group
+member must answer each question your group is asked.
+The professor and all the students in class will do an evaluation of the group’s oral presentation. Forms
+will be provided during class. Student evaluations will make up 60% of the oral case presentation score
+and the professor’s evaluation will make up 40% of the score. Only the professor will evaluate the written
+case report.
+If you have an interpersonal dispute with a group member, you must work it out on your own. In the work
+place of today, part of being a good employee is being able to get along with those “difficult” people you
+meet. IF you are unable to locate a group member, let me know at least 48 hours in advance of the case
+presentation (before class). If your group is having MAJOR problems, you can discuss them with me at
+least 48 hours in advance of the case presentation. Though this is a group activity, your grade is in your
+hands. To achieve a desired score, you may have to pull more than your own weight.
+Copies of cases will be handed out during class, included in the handout packet, or must pay to download
+one case from the web. . The cost of non-web based copies will be included in the cost of the handout
+packet.
+
+5
+QUIZZES are used to evaluate knowledge of the material, to evaluate ability to pay attention to detail, and
+to evaluate ability to perform material in a finite period of time. Quizzes will be given at the beginning of
+class and will last only 40 minutes. You MUST take the quiz during the class time you are registered
+for. No exceptions. No late quizzes will be given. If you are unable to take the quiz at the given time,
+arrangements must be made AHEAD of time to receive a makeup. I will make arrangements with you IF
+you get in touch with me ahead of time AND have a legitimate reason. My office phone number has
+phone mail and you may use email to contact me ahead of time. Students contacting me after the time of
+their quiz may not be given a makeup or may be given a SEVERE point penalty for taking the quiz late.
+Point value determined by the professor and is non-negotiable. Please be aware that if I cannot read
+your handwritten answer on the quiz, it will be marked incorrect.
+Quiz extra credit points may be available periodically throughout the semester to those students
+attending class. You are under no obligation to do these extra credit assignments. Cutoff points for A,
+A-, B+, B,… are NOT based on extra credit points. If you do well on the quizzes and have no extra credit
+points, your grade will not suffer. ALL extra credit assignments must be done individually. The Honor
+Code applies to ALL extra credit assignments and you will be required to sign a pledge when submitting
+your extra credit. Several extra credit assignments must be completed during the class period to receive
+credit. If your in-class extra credit assignments are not completed in class, you cannot receive extra
+credit and the assignment will be submitted as an honor code violation.
+Office hours will be held before each quiz and final exam. If you have questions and cannot make office
+hours, I will answer questions via email. BUT, you must attempt to answer each of your questions first. If
+your answer is not correct or not quite correct, I will provide the appropriate answers. Please remember
+that I don’t have the homework problems and answers memorized nor do I keep copies at home.
+The FINAL exam is comprehensive. You CANNOT be exempted from this final even if you have an A
+average. The final exam will NOT be given at any other time.
+HONOR SYSTEM POLICY
+Scholarly Research and Academic Integrity Tutorial
+Georgetown University has implemented an on-line Scholarly Research and Academic Integrity
+Tutorial. The purpose of the tutorial is to give students a solid foundation for research skills and
+ethics. This tutorial is required. First-year students and transfer students need to complete this
+tutorial before pre-registering for courses next semester. Use your NetID and password to access
+the tutorial through Student Access+: http://limited.georgetown.edu/StudentAccess/
+Turnitin.com
+Students agree that by taking this course the written case report may be subject to submission for
+a Textual Similarity Review to Turnitin.com for the detection of plagiarism. All submitted written
+case reports may be added as source documents in the Turnitin.com reference database solely
+for the purpose of detecting plagiarism of such papers in the future. Use of the Turnitin.com
+service is subject to the terms of use agreement posted on the Turnitin.com site.
+Regular Homework
+Working with other students on homework problems will be allowed. Direct copying of any part or
+parts of the homework, including the Minitab and Excel output, is a violation of the Honor
+System. Name, group number, AND PLEDGE must be displayed on the OUTSIDE of every
+homework to receive credit. Pledge: “This homework & printouts represent my own work. I have
+not allowed my homework to be copied nor have I copied another’s homework.” If the problem
+requires a printout of the appropriate output in order to answer the question and the printout is not
+provided, it is assumed that you “copied” the answers and thus is an honor code violation. By
+printout I mean the entire output provided by either Excel or Minitab.
+
+6
+Case Homework – Counts as TWO regular homeworks
+Brainstorming with other students on case analysis problems will be allowed. Determination of
+case question solutions, including computer work, must be done independently. Direct copying of
+any part or parts of the case analysis homework, including the Minitab and Excel output, is a
+violation of the Honor System. Name, group number, AND PLEDGE must be displayed on the
+OUTSIDE of every case homework to receive credit. Pledge: “This homework & printouts
+represent my own work. I have not allowed my homework to be copied nor have I copied
+another’s homework.” If the problem requires a printout in order to answer the question and the
+printout is not provided, it is assumed that you “copied” the answers and thus is an honor code
+violation. By printout I mean the entire output provided by either Excel or Minitab.
+Case Presentation
+Working with the students in your group is part of the case presentation experience.
+Collaborating with other groups will NOT be allowed. Copying of any part or parts of another
+group’s case analysis, including the Minitab and Excel output, is a violation of the Honor
+System.
+Quizzes and Exams
+The Honor System will be in effect for all quizzes and exams. The instructor may be present
+during quizzes and exams primarily for the purpose of answering student’s questions. Each quiz
+and exam must include a pledge.
+Extra Credit Assignments
+Your answers to the extra credit questions must be determined individually. Copying of any part
+or parts of the extra credit answer(s) or receiving outside help from any individual, other than the
+professor, concerning any part of the extra credit question(s) is NOT allowed. Each extra credit
+assignment must include a pledge and the number you were assigned in class that day.
+General Note
+The Honor System will be strictly enforced in this course. All assignments submitted shall be
+considered gradeable work, unless otherwise noted. All work must be done individually
+(including extra credit assignments), unless otherwise stated on the assignment. All
+aspects of your coursework are covered by the Honor System. Honesty in your academic work
+will develop into professional integrity. The faculty and students of Georgetown will not tolerate
+any form of academic dishonesty.
+Minimum Requirements for a Grade, except if there is a conflict with the MSB Grading policy.
+A
+A-
+
+95-100
+90-94
+
+B+
+B
+B-
+
+87-89
+83-86
+80-82
+
+C+
+C
+C-
+
+77-79
+73-76
+70-72
+
+D+
+D
+F
+
+65-69
+60-64
+0-59
+
+MSB Grading Policy: For each MSB undergraduate core course, the average GPA for all students taught
+by a given professor in a given course in a given semester will not be above 3.3 and the percentage of
+grades in the A-range will not be above 35%.
+You know the old story about the visitor to New York who asks a man on the street how to get to
+Carnegie Hall: “Practice, my dear friend, practice.” Or Josh Weston, the incisive former CEO of ADP hint
+at what is necessary for the development of expertise: deliberate practice.
+Is it intelligence that makes the difference in the quality of your performance? The following quote
+attributed to the Spanish violin virtuoso and composer Pablo de Sarasate perhaps sums up what does
+matter: “A genius! For thirty-seven years I’ve practiced fourteen hours a day, and now they call me a
+genius!”
+But maybe Martina Navratilova, in an interview for Newsweek, summarizes what it takes to excel:
+“Athletes just do not quit until they get it right, whether it is about shooting free throws or practicing serves
+
+7
+or one particular shot. It is getting up when you don’t feel like getting up for your training session, it is
+going to bed early even though you want to go out with friends, it is drinking a half a beer when you really
+want to drink two. Everything it takes to get your goal – that’s the mentality of an athlete or a successful
+human being. Period.
+The following is a non-numerical explanation of what it is going to take to excel in this course.
+An A:
+Clear understanding of when and how to use the appropriate statistical technique to answer questions.
+Flawless answers to statistical questions. Exceptional understanding of statistical theories, statistical
+concepts, rules and exceptions to the rules. Interpretations and conclusions are clear and flawless when
+explaining the statistical results to the reader. Pays careful attention to details. Often finishes work
+(assignments & tests) early. Studies notes, works or reworks examples & homework problems 30-60
+minutes a day, 7 days a week.
+A B:
+Very good understanding of when and how to use the appropriate statistical technique to answer
+questions. Near flawless answers to statistical questions. Very good understanding of statistical theories,
+statistical concepts, rules and exceptions to the rules. Interpretations and conclusions are often clear and
+near flawless when explaining the statistical results to the reader. Often pays attention to details. Finishes
+work (assignments & tests) on time. Studies notes, works or reworks examples & homework
+problems 30-60 minutes a day, 5 days a week.
+A C:
+General understanding of when and how to use the appropriate statistical technique to answer questions.
+Answers to statistical questions contain technical errors and/or careless mistakes. General understanding
+of statistical theories, statistical concepts, rules and exceptions to the rules. Interpretations and
+conclusions may be misleading and/or inaccurate when explaining the statistical results to the reader.
+May not pay attention to all the details. May run out of time to do work (assignments & tests). Studies
+notes, works or reworks examples & homework problems 30-60 minutes a day, 2 days a week.
+A D:
+Poor understanding of when and how to use the appropriate statistical technique to answer questions.
+Answers to statistical questions contain numerous technical errors and careless mistakes. Poor
+understanding of statistical theories, statistical concepts, rules and exceptions to the rules. Interpretations
+and conclusions are neither clear nor completely accurate when explaining the statistical results to the
+reader. Often does not pay attention to all the details. Often runs out of time to do work (assignments &
+tests). Studies notes, works or reworks examples & homework problems only before a quiz.
+Student Expectations
+It is not unreasonable to expect students enrolled in collegiate studies to actively seek knowledge. To this
+end, it is expected that they will avail themselves of all the educational experiences possible. First and
+foremost, preparation for class, class attendance, and class participation should be the cornerstone of this
+process. Failing to perform these duties, or an unwillingness to do so, would indicate that the student is
+not serious in their attempts to achieve educational goals.
+A team assignment allows students the opportunity to further their education in a multitude of ways. First,
+it is possible to pursue leadership roles and experiences. Secondly, it is an opportunity to practice
+interpersonal skills, negotiation techniques, and problem solving methods. Finally, it can be an
+opportunity for students to share their knowledge with others. Stepping into the role of educator, through
+disseminating your knowledge to your teammates, also furthers the education process.
+
+8
+Examinations, while necessary as a performance appraisal tool, should be viewed also through a selfanalysis filter. Performance on a quiz provides immediate feedback to the student on their educational
+attainment. In addition, preparation for the quiz allows integration of the various materials studied, as well
+as providing reinforcement for retention of the subject matter.
+There is no denying the fact that college will require sustained effort on your part. However, in the end,
+your education lies solely in your hands. Preparation for class is your responsibility: you will be expected
+to perform at the highest level possible, and you will be constantly challenged to exceed your previous
+performance. Success will be measured not only by grades, but also by your own self-awareness of
+educational attainment and scholastic achievement.
+General Information
+Follow instructions. I am a very straightforward instructor with very few surprises. This is likely the only
+course in statistics most of you will take during your undergraduate education. Topic coverage will not be
+comprehensive, but the level of coverage is comprehensive. This is a detailed oriented class. Effort is
+appreciated but it is not part of the objective measure of your knowledge of the material covered in this
+course and ability to use it properly. Demonstrating an understanding of the concepts will earn partial
+credit but not full credit. Understanding the concept, correctly applying the concept plus clearly
+presenting and explaining your results will earn full credit.
+Presentation of statistical answers must NOT be ambiguous. All parts of your work, not just the answer,
+must be clearly labeled. If I cannot read your answer or easily find your answer on your paper, it will not
+count. Today in business, recommendations are no longer based on personal opinion/experience.
+Claims must be supported – “Show me the numbers!”. Indicating that an answer is 6 or that one should
+reject H0, though 100% correct, will not be an acceptable, full credit answer. Documentation supporting
+your answer of 6 or your decision to reject H0 must also be included. In this course, knowledge of
+concepts requires a clear presentation of detailed results.
+Statistical results are often easily misunderstood. Hence, significant emphasis will be placed on correct
+interpretations and explanations of the statistical results. There are a variety of ways to make clear,
+correct statements. These statements will be given full credit IF all the appropriate points have been
+made and nothing misleading has been included. Applying the concepts and presenting the results weigh
+equally in this course.
+As with any professor or employer, there will be course or job requirements that only “they” want to see in
+your work. Different professors or employers emphasize different aspects of the work. You as a student
+or employee may not agree with the emphasis or requirement or may not understand the emphasis or
+requirement. Nonetheless, your course or job performance evaluation will include these “picky”
+requirements. If you are uncomfortable having your statistics course grade be based on unique
+requirements set forth by the professor, please consider switching professors. Your grade may reflect
+your attitude and demeanor in class and during office hours.
+Knowledge versus Understanding Be aware of the difference between knowledge and understanding,
+and the difference between understanding and wisdom. These are all different, but they are related. You
+must demonstrate knowledge and understanding to receive full credit
+Responsibility You are responsible for your work in this class. This includes arriving sufficiently early to
+be seated and ready for class, case presentations, quizzes and the exam as well as turning in homework
+on time. Responsibility also means dealing with the consequences of your actions or misfortunes. In my
+class, I don’t give grades you earn them.
+
+9
+On October 18, 2007, Lee Shulman, President of the Carnegie Foundation for the Advancement of
+Teaching, spoke at the Provost’s Seminar on Teaching and Learning. Mr. Shulman said that
+undergraduate education must go beyond simply understanding the concepts to include performancebased exercises. “In the professions, by definition, understanding is not enough. The professional is
+obligated not only to know but to act – act within constraints of time, information and context.” Mr
+Shulman also pointed out, habit of mind imparts the information needed, habit of practice allows them to
+put their knowledge to use daily, and habit of the heart gives them the tools they need to be ethical
+enthusiastic practitioners.
+“Do or do not; there is no try.” Yoda
+Did I miss anything? by Tom Wayman
+Nothing! When we realized you weren't here we sat with our hands folded on our desks in silence, for the
+full two hours.
+Everything! I gave an exam worth 40 percent of the grade for this term and assigned some reading due
+today on which I'm about to hand out a quiz worth 50 percent.
+Nothing! None of the content of this course has value or meaning. Take as many days off as you like: any
+activities we undertake as a class I assure you will not matter either to you or me and are without
+purpose.
+Everything! A few minutes after we began last time a shaft of light suddenly descended and an angel or
+other heavenly being appeared and revealed to us what each woman or man must do to attain divine
+wisdom in this life and the hereafter. This is the last time the class will meet before we disperse to bring
+the good news to all people on earth!
+Nothing! When you are not present how could something significant occur?
+Everything! Contained in this classroom is a microcosm of human experience assembled for you to query
+and examine and ponder. This is not the only place such an opportunity has been gathered but it was
+one place
+And you weren't here.
+PLEASE READ THE FOLLOWING ESSAY which has been annotated for context
+Arthur Michelson: The precision of math, like poetry, gets to heart of things
+Arthur Michelson, who teaches at Beechwood School in Menlo Park, Calif., wrote this article for the Los Angeles
+Times.
+December 30, 2004 MICHELSON1230
+American middle school {college students} don't much care that they're worse at math than their counterparts in Hong
+Kong and Finland. "I don't need it," my students say. "I'm gonna be a basketball star." Or a beautician, or a car
+mechanic, or a singer {or work on Wall Street}.
+It's also hard to get much of a rise out of adults over the fact, released earlier this year, that the United States ranked
+28th out of 41 countries whose middle school students' math skills were tested by the Organization for Economic
+Cooperation and Development. So what if we're tied with Latvia, while nations such as Japan and South Korea leave
+us in the dust? After all, when was the last time you used algebra?
+But math is not just about computing quadratic equations, knowing geometric proofs or balancing a checkbook. And
+it's not just about training Americans to become scientists.
+
+10
+It has implicit value. It is about discipline, precision, thoroughness and meticulous analysis. It helps you see
+patterns, develops your logic skills, teaches you to concentrate and to separate truth from falsehood. These
+are abilities and qualities that distinguish successful people.
+Math helps you make wise financial decisions, but also informs you so you can avoid false claims from advertisers,
+politicians and others. It helps you determine risk. Some examples:
+• If a fair coin is tossed and eight heads come up in a row, most adults would gamble that the next toss would come
+up tails. But a coin has no memory. There is always a 50-50 chance. See you at the casino?
+• If you have no sense of big numbers, you can't evaluate the consequences of how government spends your money.
+Why should we worry? Let our kids deal with it. ...
+• Enormous amounts of money are spent on quack medicine. Many people will reject sound scientific studies on
+drugs or nutrition if the results don't fit their preconceived notions, yet they might leap to action after reading news
+stories on the results of small, inconclusive or poorly run studies.
+• After an airplane crash, studies show that people are more likely to drive than take a plane in spite of the fact that
+they are much more likely to be killed or injured while driving. Planes are not like copycat criminals. A plane is not
+more likely to crash just because another recently did. In fact, the most dangerous time to drive is probably right after
+a plane crash because so many more people are on the road.
+The precision of math, like poetry, gets to the heart of things. It can increase our awareness.
+Consider the Fibonacci series, in which each number is the sum of the preceding two, (0, 1, 1, 2, 3, 5, 8, 13 ...).
+Comparing each successive pair yields a relationship known as the Golden Ratio, which often shows up in nature
+and art. It's the mathematical underpinning of what we consider beautiful. You'll find it in the design of the Parthenon
+and the Mona Lisa, as well as in human proportion; for instance, in the size of the hand compared with the forearm
+and the forearm to the entire arm. Stephen Hawking's editor warned him that for every mathematical formula he
+wrote in a book, he would lose much of his audience. Yet more than a little is lost by dumbing things down.
+It is not possible to really understand science and the scientific method without understanding math. A rainbow is
+even more beautiful and amazing when we understand it. So is a lightning bolt, an ant or ourselves.
+Math gives us a powerful tool to understand our universe. I don't wish to overstate: Poetry, music, literature and the
+fine and performing arts are also gateways to beauty. Nothing we study is a waste. But the precision of math helps
+refine how we think in a very special way.
+How do we revitalize the learning of math? I don't have the big answer. I teach middle school {college} and try to find
+an answer one child {student} at a time. When I can get one to say, "Wow, that's tight," I feel the joy of a small victory.
+
+11
+SPRING 2010 DAY BY DAY COURSE OUTLINE
+DATE
+1/14
+1/19
+
+TOPICS
+Why do we need statistics? Sample vs Pop.
+Intro to Minitab, Graphs, & Proportion
+
+1/21
+1/26
+1/28
+2/ 2
+
+Summary Measures
+Summary Measures
+Scatter Plots & Correlation Coefficient
+Probability
+Review Quiz 1
+QUIZ 1
+Discrete Random Variables
+CASE 1: Harley Davidson
+Expected Values & Variance
+Continuous Random Variables – The Normal
+Distribution
+Normal Probability Distribution
+Sampling Distributions
+Confidence Intervals
+Confidence Intervals
+Review Quiz 2
+QUIZ 2
+Hypothesis Testing
+CASE 2: Amore
+t - test of Hypothesis
+Introduction to Simple Linear Regression
+Method of Least Squares, Standard Error, R2
+Residual Analysis
+Residual Analysis Cont. & Slope Test
+Review Quiz 3 & Confidence Intervals
+QUIZ 3
+Introduction to Multiple Regression
+Residual Analysis & Standard Error, R2 and
+adjusted R2
+CASE 3: Consolidated Foods-B
+F – test
+Tests of Individual Coefficients
+Confidence Intervals & Multicollinearity
+Review for Quiz 4
+Dummy Variables & Best Subsets
+QUIZ 4
+Introduction to Time Series
+Trend and Seasonal Components
+CASE 4: Consolidated Foods-D
+Review for Final Exam
+FINAL EXAM from 4 – 6 p.m.
+
+2/ 4
+2/ 9
+2/11
+2/16
+2/18
+2/23
+2/25
+3/ 2
+3/ 4
+3/16
+3/18
+3/23
+3/25
+3/30
+4/ 6
+4/ 8
+4/13
+4/15
+4/20
+4/22
+4/27
+4/29
+5/8
+
+BLK Readings
+1 – 15, 894 – 898
+16-24, 36-43, 56-59, 258267, 898-903
+89 – 112
+26 – 29, 52 – 54, 125 – 129
+143 – 150, 171 – 172
+179 – 183
+184 – 188
+102 – 103, 217 – 223
+229
+267 – 277
+291 – 299, 326 – 327
+299 – 306
+341 – 350
+351 – 354
+355 – 360, 378 – 380
+573 – 583
+586 – 592
+593 – 597
+598 – 605
+612 – 620
+635 – 641
+605 – 607
+643 – 645
+649 – 652
+706 – 707
+660-666, 708-709, 712-720
+729 – 731
+738 – 740, 764 – 765
+Room TBA
+
+
