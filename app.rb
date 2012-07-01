@@ -101,15 +101,17 @@ class Document < ActiveRecord::Base
     system "mkdir #{job_path}/images"
     Docsplit.extract_images(job_file_path, :output => job_path, :size => '400x', :format => [:png])
     system "mkdir #{job_path}/images/small && mv #{job_path}/*.png #{job_path}/images/small"
-    Docsplit.extract_images(job_file_path, :output => job_path, :size => '1200x', :format => [:png])
+    #Docsplit.extract_images(job_file_path, :output => job_path, :size => '1200x', :format => [:png])
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
-    Docsplit.extract_text(job_file_path, :ocr => true, :output => "#{job_path}/text")
+    Docsplit.extract_text(job_file_path, :output => "#{job_path}/text")
+=begin
     system "touch #{job_path}/text/#{self.token}-processed.txt"
     open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
       f << File.open("#{job_path}/text/#{self.token}-processed.txt").read.gsub(/(?<!\n)\n(?!\n)/, " ")
     }
+=end
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
 
     puts "moving pdf into folder..."
