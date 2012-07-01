@@ -32,70 +32,100 @@ class Processor
   @queue = :document_id
 
   def self.perform(document_id)
-    begin
+    #begin
       document = Document.find(document_id)
       document.create_tree
-    rescue
-      puts "there was an error in finding that document."
-    end
+    #rescue
+     # puts "there was an error in finding that document."
+    #end
+  end
+
+  def self.sanitize_filename(filename)
+    # Split the name when finding a period which is preceded by some
+    # character, and is followed by some character other than a period,
+    # if there is no following period that is followed by something
+    # other than a period (yeah, confusing, I know)
+    fn = filename.split(/(?<=.)\.(?=[^.])(?!.*\.[^.])/m)
+
+    # We now have one or two parts (depending on whether we could find
+    # a suitable period). For each of these parts, replace any unwanted
+    # sequence of characters with an underscore
+    fn.map! { |s| s.gsub(/[^a-z0-9\-]+/i, '_') }
+
+    # Finally, join the parts with a period and return the result
+    return fn.join '.'
   end
 end
 
 class Document < ActiveRecord::Base
-  attr_accessor :job_file_path, #base document from source
-                :job_path
+  attr_accessor :job_file_path #base document from source
   attr_accessible :token,
                   :source,
                   :complete
 
-  def create_tree
-    #create job folder
-    puts "creating folder..."
-    self.job_path = "#{settings.jobs_path}/#{self.token}"
-    system "mkdir #{self.job_path}"
+  def job_path
+    "#{settings.jobs_path}/#{self.token}"
+  end
 
-    #download the file and place it
+  def pdf?
+    self.source[-3,3] == 'pdf'
+  end
+
+  def source_file_path
+    "#{job_path}/#{Processor.sanitize_filename(self.source.split("/").last)}"
+  end
+
+  def job_file_path
+    "#{job_path}/#{self.token}.pdf"
+  end
+
+  def create_tree
+    puts "creating folder..."
+
+    system "mkdir #{job_path}"
+
     puts "downloading source..."
     self.download
-    #do conversions
-    if production?
-      puts "doing production stuff..."
 
-      split = link.split(".")
-      split[split.size - 1] = "pdf"
-      pdf_file_path = split.join(".")
+    puts "doing production stuff..."
 
+    if pdf?
+      system "cp #{source_file_path} #{job_file_path}"
+    else
       puts "converting to pdf..."
-      Docsplit.extract_pdf(self.job_file_path)
-
-      puts "making images..."
-      system "mkdir images"
-      Docsplit.extract_images(pdf_file_path, :size => '400x', :format => [:png])
-      system "mkdir #{self.job_path}/images/small && mv #{self.job_path}/*.png #{self.job_path}/images/small"
-      Docsplit.extract_images(pdf_file_path, :size => '1200x', :format => [:png])
-      system "mkdir images/large && mv *.png images/large"
-
-      puts "extracting text..."
-      Docsplit.extract_text(Dir[pdf_file_path], :ocr => true, :output => 'text')
-      open("#{self.job_path}/text/#{self.token}.txt", 'w') { |f|
-        f << File.open("#{self.job_path}/text/#{self.token}-temp.txt").read.gsub(/(?<!\n)\n(?!\n)/, ' ')
-      }
-      system "mv #{self.job_path}/text/#{self.token}-temp.txt #{self.job_path}/text/#{self.token}.txt"
-
-      puts "moving pdf into folder..."
-      system "mkdir pdf && mv #{self.job_path}/#{pdf_file_path} #{self.job_path}/pdf/#{pdf_file_path}"
+      Docsplit.extract_pdf(source_file_path, output: job_path)
+      system "mv #{source_file_path[0..source_file_path.rindex('.')] + 'pdf'} #{job_file_path}"
     end
-    #set document state = true
+
+    puts "making images..."
+    system "mkdir #{job_path}/images"
+    Docsplit.extract_images(pdf_file_path, :size => '400x', :format => [:png])
+    system "mkdir #{job_path}/images/small && mv #{job_path}/*.png #{job_path}/images/small"
+    Docsplit.extract_images(pdf_file_path, :size => '1200x', :format => [:png])
+    system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
+
+    puts "extracting text..."
+    Docsplit.extract_text(Dir[job_file_path], :ocr => true, :output => 'text')
+    open("#{job_path}/text/#{self.token}.txt", 'w') { |f|
+      f << File.open("#{job_path}/text/#{self.token}-temp.txt").read.gsub(/(?<!\n)\n(?!\n)/, ' ')
+    }
+    system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
+
+    puts "moving pdf into folder..."
+    system "mkdir #{job_path}/pdf && mv #{job_file_path} #{job_path}/pdf/#{self.token}.pdf"
+
+    self.complete = true
+    self.save
   end
 
   def download
-    uri = URI(self.source)
-    self.job_file_path = "#{settings.jobs_path}/#{self.token}/#{[self.token, self.source.split(".").last].join(".")}"
+    uri = URI(URI.escape(self.source))
+
     if uri.scheme.eql? "https"
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open self.job_file_path, 'w' do |io|
+          open source_file_path, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
@@ -106,7 +136,7 @@ class Document < ActiveRecord::Base
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Get.new uri.request_uri
         http.request request do |response|
-          open self.job_file_path, 'w' do |io|
+          open source_file_path, 'w' do |io|
             response.read_body do |chunk|
               io.write chunk
             end
