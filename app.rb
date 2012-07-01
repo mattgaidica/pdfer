@@ -6,13 +6,24 @@ require "sqlite3"
 require "net/http"
 require "resque"
 require "docsplit"
+require "aws/s3"
+
+AWS::S3::Base.establish_connection!(
+  :access_key_id     => "AKIAJM6UM7QJIER6VHZA",
+  :secret_access_key => "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"
+)
+
+config = YAML.load(ERB.new(File.read('./config/database.yml')).result)
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.establish_connection(config[settings.environment.to_s])
 
 root = File.dirname(__FILE__)
-require File.join(root, "/config/environments")
+#require File.join(root, "/config/environments")
 
 configure do
   set :jobs_path, "#{root}/jobs"
   set :host, production? ? "108.166.72.138" : "localhost:8080"
+  set :s3_bucket, "pdfer"
 end
 
 before do
@@ -25,6 +36,14 @@ helpers do
       true
     end
   end
+end
+
+def md5
+  Digest::MD5.hexdigest(rand(36**8).to_s(36))
+end
+
+def ext filename
+  filename.split(".").last
 end
 
 class Processor
@@ -57,11 +76,56 @@ class Processor
   end
 end
 
+class Storage < ActiveRecord::Base
+  attr_accessible :local,
+                  :remote
+
+  def self.bucket local
+    remote = "#{md5}.#{ext(local)}"
+    AWS::S3::S3Object.store(remote, open(local), settings.s3_bucket)
+    if AWS::S3::Service.response.success?
+      self.create({:local => local, :remote => remote})
+    end
+  end
+
+  def self.store_document document
+    puts document.job_file_path
+    #should probably make sure these all exist before doing anything
+    if File.exist? document.job_file_path
+      #source file
+      bucket(document.source_file_path)
+      puts "source: #{document.source_file_path}"
+
+      #job file
+      bucket(document.source_file_path)
+      puts "original: #{document.job_file_path}"
+
+      #images
+      Dir["#{document.job_path}/images/large/*"].each do |file|
+        puts "large image: #{file}"
+        bucket(file)
+      end
+      Dir["#{document.job_path}/images/small/*"].each do |file|
+        bucket(file)
+        puts "small image: #{file}"
+      end
+
+      #text file
+      bucket(document.text_file_path)
+      puts "text: #{document.text_file_path}"
+    end
+  end
+end
+
 class Document < ActiveRecord::Base
   attr_accessor :job_file_path #base document from source
   attr_accessible :token,
                   :source,
                   :complete
+  
+  def store
+    Storage.store_document self
+  end
 
   def job_path
     "#{settings.jobs_path}/#{self.token}"
@@ -76,7 +140,11 @@ class Document < ActiveRecord::Base
   end
 
   def job_file_path
-    "#{job_path}/#{self.token}.pdf"
+    "#{job_path}/pdf/#{self.token}.pdf"
+  end
+
+  def text_file_path
+    "#{job_path}/text/#{self.token}.txt"
   end
 
   def create_tree
@@ -94,7 +162,7 @@ class Document < ActiveRecord::Base
     else
       puts "converting to pdf..."
       Docsplit.extract_pdf(source_file_path, output: job_path)
-      system "mv #{source_file_path[0..source_file_path.rindex('.')] + 'pdf'} #{job_file_path}"
+      system "mkdir #{job_path}/pdf && mv #{source_file_path[0..source_file_path.rindex('.')] + 'pdf'} #{job_file_path}"
     end
 
     puts "making images..."
@@ -114,9 +182,6 @@ class Document < ActiveRecord::Base
     }
     #system "mv #{job_path}/text/#{self.token}-temp.txt #{job_path}/text/#{self.token}.txt"
 =end
-
-    puts "moving pdf into folder..."
-    system "mkdir #{job_path}/pdf && mv #{job_file_path} #{job_path}/pdf/#{self.token}.pdf"
 
     self.complete = true
     self.save
@@ -182,7 +247,7 @@ post "/do" do
   #do more validation on document, does it even exist?
   if params[:document] && valid_document?(params[:document])
     document = Document.create({
-      :token => Digest::MD5.hexdigest(rand(36**8).to_s(36)),
+      :token => md5,
       :source => URI.encode(params[:document]),
       :complete => false
     })
@@ -200,6 +265,11 @@ end
 
 get "/documents" do
   Document.find(:all).to_json
+end
+
+get "/storage" do
+  document = Document.new({:token => "e7af22e691a678c8985960a5ffc0cac7", :source => "https://s3.amazonaws.com/syllabi/Business_20Statistics_20Syllabus.doc", :complete => true})
+  document.store
 end
 
 # catch-alls

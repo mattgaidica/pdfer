@@ -8,6 +8,7 @@ gem "json"
 gem "rspec"
 gem "sqlite3"
 gem "resque"
+gem "aws-s3"
 
 group :development, :test do
   gem "rack-test"
