@@ -10,6 +10,7 @@ window #2: rake jobs:work RACK_ENV=development
 
 On server:
 sudo /etc/init.d/redis-server start
+to spawn up the resque web client: resque-web
 
 Access sqlite via: sqlite3 ./db/development.sqlite3
 
