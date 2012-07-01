@@ -105,7 +105,7 @@ class Document < ActiveRecord::Base
     system "mkdir #{job_path}/images/large && mv #{job_path}/*.png #{job_path}/images/large"
 
     puts "extracting text..."
-    Docsplit.extract_text(job_file_path, :ocr => true, :output => "#{job_path}/text")
+    Docsplit.extract_text(job_file_path, :ocr => false, :output => "#{job_path}/text")
 
 =begin not reliable at the moment
     system "touch #{job_path}/text/#{self.token}-processed.txt"
@@ -169,7 +169,7 @@ end
 get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if !document.complete
-      document.format_results.to_json
+      document.to_json
     else
       json_status 204, "Document still processing."
     end
