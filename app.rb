@@ -151,15 +151,7 @@ class Document < ActiveRecord::Base
   end
 
   def format_results
-    results = {
-      :original => self.original,
-      :pdf => self.pdf,
-      :text => self.text,
-      :images => {
-        :small => Image.where(:document_id => self.id, :size => "small").map{|m| m[:image][:image]},
-        :large => Image.where(:document_id => self.id, :size => "large").map{|m| m[:image][:image]}
-      }
-    }
+
   end
 end
 
