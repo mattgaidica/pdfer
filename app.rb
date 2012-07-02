@@ -9,6 +9,22 @@ require "docsplit"
 require "aws/s3"
 require "fileutils"
 
+root = File.dirname(__FILE__)
+
+configure do
+  set :jobs_path, "#{root}/jobs"
+  set :host, production? ? "108.166.72.138" : "localhost:8080"
+  set :s3_path, "https://s3.amazonaws.com"
+end
+
+configure :development do
+  set :s3_bucket, "pdfer-dev"
+end
+
+configure :test, :production do
+  set :s3_bucket, "pdfer"
+end
+
 AWS::S3::Base.establish_connection!(
   :access_key_id     => "AKIAJM6UM7QJIER6VHZA",
   :secret_access_key => "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"
@@ -17,15 +33,6 @@ AWS::S3::Base.establish_connection!(
 config = YAML.load(ERB.new(File.read('./config/database.yml')).result)
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.establish_connection(config[settings.environment.to_s])
-
-root = File.dirname(__FILE__)
-#require File.join(root, "/config/environments")
-
-configure do
-  set :jobs_path, "#{root}/jobs"
-  set :host, production? ? "108.166.72.138" : "localhost:8080"
-  set :s3_bucket, "pdfer"
-end
 
 before do
   content_type :json
@@ -107,7 +114,7 @@ class Storage < ActiveRecord::Base
     end
 
     #text file
-    bucket(document.text_file_path) unless !production?
+    bucket(document.text_file_path)
   end
 end
 
@@ -182,6 +189,7 @@ class Document < ActiveRecord::Base
       FileUtils.cp(source_file_path, pdf_file_path)
     else
       puts "converting to pdf..."
+      #consider placing pdf in the pdf_path to start
       Docsplit.extract_pdf(source_file_path, output: job_path)
       FileUtils.mv(source_file_path[0..source_file_path.rindex(".")] + "pdf", pdf_file_path)
     end
@@ -190,13 +198,13 @@ class Document < ActiveRecord::Base
     Dir::mkdir("#{images_path}")
 
     Dir::mkdir(small_images_path)
-    Docsplit.extract_images(pdf_file_path, :output => small_images_path, :size => '400x', :format => [:png]) #unless !production?
+    Docsplit.extract_images(pdf_file_path, :output => small_images_path, :size => '400x', :format => [:png])
 
     Dir::mkdir(large_images_path)
-    Docsplit.extract_images(pdf_file_path, :output => large_images_path, :size => '1200x', :format => [:png]) #unless !production?
+    Docsplit.extract_images(pdf_file_path, :output => large_images_path, :size => '1200x', :format => [:png])
 
     puts "extracting text..."
-    Docsplit.extract_text(pdf_file_path, :ocr => false, :output => "#{text_path}") #unless !production?
+    Docsplit.extract_text(pdf_file_path, :ocr => false, :output => "#{text_path}")
 
 =begin not reliable at the moment
     system "touch #{job_path}/text/#{self.token}-processed.txt"
@@ -214,7 +222,7 @@ class Document < ActiveRecord::Base
 
   def download
     uri = URI(self.source)
-
+    #it would be smart to follow redirects
     if uri.scheme.eql? "https"
       Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         request = Net::HTTP::Get.new uri.request_uri
@@ -241,7 +249,39 @@ class Document < ActiveRecord::Base
   end
 
   def format_results
+    results = {}
+    if storage = Storage.find_by_local(self.source_file_path)
+      results = results.merge({:source => "#{settings.s3_path}/#{settings.s3_bucket}/#{storage.remote}"})
+    end
+    if storage = Storage.find_by_local(self.pdf_file_path)
+      results = results.merge({:pdf => "#{settings.s3_path}/#{settings.s3_bucket}/#{storage.remote}"})
+    end
+    if storage = Storage.find_by_local(self.text_file_path)
+      results = results.merge({:text => "#{settings.s3_path}/#{settings.s3_bucket}/#{storage.remote}"})
+    end
 
+    small_images = []
+    small_images_file_paths.each_with_index do |image, index|
+      if storage = Storage.find_by_local("#{image}")
+        small_images << "#{settings.s3_path}/#{settings.s3_bucket}/#{storage.remote}"
+      end
+    end
+
+    large_images = []
+    large_images_file_paths.each_with_index do |image, index|
+      if storage = Storage.find_by_local("#{image}")
+        large_images << "#{settings.s3_path}/#{settings.s3_bucket}/#{storage.remote}"
+      end
+    end
+
+    images = {
+      :small_images => small_images,
+      :large_images => large_images
+    }
+
+    results = results.merge({:images => images})
+
+    {:document => results}
   end
 end
 
@@ -259,7 +299,7 @@ end
 get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if document.complete
-      document.to_json
+      document.format_results.to_json
     else
       json_status 204, "Document still processing."
     end

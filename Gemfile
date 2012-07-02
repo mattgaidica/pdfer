@@ -12,6 +12,8 @@ gem "aws-s3"
 
 group :development, :test do
   gem "rack-test"
+  gem "httparty"
+  gem "terminal-display-colors"
 end
 
 group :production do
