@@ -46,7 +46,7 @@ namespace :server do
 
     puts "restarting apache..."
     puts `sudo /etc/init.d/apache2 restart`
-    
+
     puts "complete"
   end
   namespace :restart do
@@ -71,10 +71,10 @@ namespace :db do
   task :reset do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Migration.verbose = true
-    if File.exists?(File.join(File.dirname(__FILE__), "db/schema.rb"))
-      Rake::Task["db:schema:load"].invoke
-    end
-    #ActiveRecord::Migrator.down("db/migrate")
+    #if File.exists?(File.join(File.dirname(__FILE__), "db/schema.rb"))
+     # Rake::Task["db:schema:load"].invoke
+    #end
+    ActiveRecord::Migrator.down("db/migrate")
     ActiveRecord::Migrator.migrate("db/migrate")
   end
 
