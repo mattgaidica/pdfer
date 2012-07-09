@@ -10,6 +10,7 @@ gem "sqlite3"
 gem "resque"
 gem "aws-s3"
 gem "httparty"
+gem "docsplit"
 
 group :development, :test do
   gem "rack-test"
@@ -17,5 +18,5 @@ group :development, :test do
 end
 
 group :production do
-  gem "docsplit"
+  gem "god"
 end

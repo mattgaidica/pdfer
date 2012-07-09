@@ -8,7 +8,7 @@ On localhost:
 window #1: redis-server /etc/redis.conf
 window #2: rake jobs:work RACK_ENV=development
 
-On server:
+On server: 108.166.72.138
 sudo /etc/init.d/redis-server start
 to spawn up the resque web client: resque-web
 
