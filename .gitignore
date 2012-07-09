@@ -1,3 +1,4 @@
 *.rdb
 config/god.rb
 *.rb.pidy
+db/*.sqlite3
