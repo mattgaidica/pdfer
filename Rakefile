@@ -39,7 +39,7 @@ namespace :server do
     Rake::Task["queue:restart_workers"].invoke
 
     puts "migrating database..."
-    Rake::Task["db:schema:load"].invoke
+    Rake::Task["db:migrate"].invoke
 
     puts "installing bundle..."
     puts `bundle install`
