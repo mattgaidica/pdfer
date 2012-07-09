@@ -23,7 +23,7 @@ document = ARGV[0]
 if !ARGV.nil? && ARGV[1].eql?("production")
   host = "http://108.166.72.138"
 else
-  host = "http://localhost:8080"
+  host = "http://localhost:7777"
 end
 
 puts "--> Using #{host} as host".yellow
@@ -59,5 +59,5 @@ if do_response.code == 200
   stop_pdfer "We are done here"
 else
   puts "PDFer responded with a #{do_response.code} status from '/do'.".red
-  stop_pder
+  stop_pdfer
 end

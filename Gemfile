@@ -9,10 +9,10 @@ gem "rspec"
 gem "sqlite3"
 gem "resque"
 gem "aws-s3"
+gem "httparty"
 
 group :development, :test do
   gem "rack-test"
-  gem "httparty"
   gem "terminal-display-colors"
 end
 

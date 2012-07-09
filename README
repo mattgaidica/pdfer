@@ -1,4 +1,4 @@
-This could be where pdf magic happens.
+This is where pdf magic happens.
 
 use rerun unicorn config.ru to reload in development
 
@@ -30,9 +30,10 @@ rackspace root: 6aEl7J7lCsyllabuster-compute
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\e[01;32m\]\w \$(parse_git_branch): \[\e[00m\]"
 
 (reload with: exec bash)
-ruby config/daemons.rb start
+# ruby config/daemons.rb start
 
 delete jobs without removing git ignore: rm -rf [!.]*
 
 restart workers: sudo kill -9 `ps aux | grep [r]esque | grep -v grep | cut -c 10-16`
 
+REMEMBER * workers are not updated until the rake task is restarted

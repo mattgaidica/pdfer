@@ -8,12 +8,15 @@ require "resque"
 require "docsplit"
 require "aws/s3"
 require "fileutils"
+require "httparty"
 
 root = File.dirname(__FILE__)
 
+require root + "/lib/extractor"
+
 configure do
   set :jobs_path, "#{root}/jobs"
-  set :host, production? ? "108.166.72.138" : "localhost:8080"
+  set :host, production? ? "108.166.72.138" : "localhost:7777"
   set :s3_path, "https://s3.amazonaws.com"
 end
 
@@ -40,7 +43,8 @@ end
 
 helpers do
   def valid_document? document
-    unless (document =~ /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix).nil?
+    whitelist = %w(doc docx pdf html txt png jpg jpeg)
+    if document =~ /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix && whitelist.include?(document.split('.').last)
       true
     end
   end
@@ -190,7 +194,7 @@ class Document < ActiveRecord::Base
     else
       puts "converting to pdf..."
       #consider placing pdf in the pdf_path to start
-      Docsplit.extract_pdf(source_file_path, output: job_path)
+      Docsplit.extract_pdf(source_file_path, :output => job_path)
       FileUtils.mv(source_file_path[0..source_file_path.rindex(".")] + "pdf", pdf_file_path)
     end
 
@@ -204,7 +208,12 @@ class Document < ActiveRecord::Base
     Docsplit.extract_images(pdf_file_path, :output => large_images_path, :size => '1200x', :format => [:png])
 
     puts "extracting text..."
-    Docsplit.extract_text(pdf_file_path, :ocr => false, :output => "#{text_path}")
+    Docsplit.extract_text(pdf_file_path, :ocr => false, :output => text_path)
+
+    text_file_line_count = %x{wc -l #{text_file_path}}.split.first.to_i
+    if text_file_line_count == 0
+      Docsplit.extract_text(pdf_file_path, :ocr => true, :output => "#{text_path}")
+    end
 
 =begin not reliable at the moment
     system "touch #{job_path}/text/#{self.token}-processed.txt"
@@ -296,6 +305,31 @@ get "/" do
   {:welcome => "Getting Sylly with PDFer.", :environment => settings.environment}.to_json
 end
 
+get "/doc/:token/view" do
+  content_type 'text/html', :charset => 'utf-8'
+  if @document = Document.find_by_token(params[:token])
+    if @document.complete
+      if pdf_storage = Storage.find_by_local(@document.pdf_file_path)
+        @pdf_location = "#{settings.s3_path}/#{settings.s3_bucket}/#{pdf_storage.remote}"
+        if text_storage = Storage.find_by_local(@document.text_file_path)
+          response = HTTParty.get("#{settings.s3_path}/#{settings.s3_bucket}/#{text_storage.remote}")
+          if response.code == 200
+            extractor = Extractor.new(response.body)
+            @extracted = extractor.all
+          end
+        end
+        erb :show
+      else
+        "Unable to locate document."
+      end
+    else
+      "This document is still processing."
+    end
+  else
+    "Document not found."
+  end
+end
+
 get "/doc/:token" do
   if document = Document.find_by_token(params[:token])
     if document.complete
@@ -313,12 +347,17 @@ post "/do" do
   if params[:document] && valid_document?(params[:document])
     document = Document.create({
       :token => md5,
-      :source => URI.encode(params[:document]),
+      :source => params[:document],
       :complete => false
     })
-    Resque.enqueue(Processor, document.id)
-    #Processor.perform(document.id)
-    {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
+    begin
+      #Processor.perform(document.id)
+      Resque.enqueue(Processor, document.id)
+      {:token => document.token, :link => "http://#{settings.host}/doc/#{document.token}"}.to_json
+    rescue
+      document.destroy
+      json_status 400, "Unable to process job."
+    end
   else
     json_status 400, "Please provide a valid document."
   end
