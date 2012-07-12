@@ -36,4 +36,5 @@ delete jobs without removing git ignore: rm -rf [!.]*
 
 restart workers: sudo kill -9 `ps aux | grep [r]esque | grep -v grep | cut -c 10-16`
 
-REMEMBER * workers are not updated until the rake task is restarted
+WOHOO - God is working and resetting worker processes, on every new commit do:
+-> rake server:init RACK_ENV=development
