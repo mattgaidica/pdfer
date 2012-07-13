@@ -13,10 +13,10 @@ gem 'httparty'
 gem 'docsplit'
 gem 'amatch'
 gem 'stanford-core-nlp'
+gem 'terminal-display-colors'
 
 group :development, :test do
   gem 'rack-test'
-  gem 'terminal-display-colors'
 end
 
 group :production do

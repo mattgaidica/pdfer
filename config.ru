@@ -1,8 +1,2 @@
-require 'rubygems'
-
-require File.expand_path('../app', __FILE__)
-
-set :environment, ENV['RACK_ENV']
-set :run, false
-
-run Sinatra::Application
+require ::File.join(::File.dirname(__FILE__), 'app')
+run Pdfer.new
